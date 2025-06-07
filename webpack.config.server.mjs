@@ -80,7 +80,8 @@ const config = {
   watch: isDev,
   externalsPresets: { node: true },
   target: 'node',
-  devtool: isDev ? 'source-map' : false,
+  // REMOVE SOURCE MAP IN PROD IF YOU DON'T FEEL LIKE EXPOSING CLEAR CODE
+  devtool: isDev ? 'eval-source-map' : false,
   externals: [ nodeExternals() ],
 };
 

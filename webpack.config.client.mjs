@@ -5,6 +5,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { EsbuildPlugin } from 'esbuild-loader';
 import dotenv from 'dotenv';
+import { PurgeCSSPlugin } from 'purgecss-webpack-plugin';
+import { glob } from 'glob';
 // import { type Configuration } from 'webpack';
 // import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
@@ -80,7 +82,10 @@ const config = {
       define: {
         'process.env.NODE_ENV': JSON.stringify( process.env.NODE_ENV ),
       }
-    } )
+    } ),
+    new PurgeCSSPlugin( {
+      paths: glob.sync( `${path.join( __dirname, '../src/client/style' )}/**/*`, { nodir: true } ),
+    } ),
   ],
   module: {
     rules: [
@@ -126,7 +131,7 @@ const config = {
   mode: isDev ? 'development' : 'production',
   watch: isDev,
   target: 'web',
-  devtool: isDev ? 'source-map' : false,
+  devtool: isDev ? 'eval-source-map' : 'source-map',
 };
 
 export default config;
