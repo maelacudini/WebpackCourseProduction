@@ -16,9 +16,9 @@ export const registerPlugins = async ( fastify: FastifyInstance ) => {
     options: { cache: false }
   } );
   
-  // SERVE STATIC FILES (E.G. STYLE)
+  // SERVE STATIC FILES
   await fastify.register(fastifyStatic, {
-    root: path.join(rootDir, 'dist', 'client'), 
-    // prefix: '/client/',
+    root: path.join(rootDir, 'dist', 'client'),
   });
+
 };
