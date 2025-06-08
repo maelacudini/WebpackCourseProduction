@@ -11,4 +11,10 @@ body {
   color: var.$foreground;
   padding: 1rem;
   font-family: Arial, Helvetica, sans-serif;
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

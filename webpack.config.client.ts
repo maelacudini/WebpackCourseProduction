@@ -130,20 +130,39 @@ const config: Configuration = {
       paths: glob.sync(`${path.join(__dirname, '../src/client')}/**/*.{ts,tsx,js,jsx,html,ejs}`, {
         nodir: true
       }),
-      safelist: ['body'],
+      safelist: ['body', 'main'],
       blocklist: [],
     } ),
   ],
   module: {
     rules: [
+      // Pick one of the following loaders, not both:
+
+      // Esbuild (Faster, simpler, but less flexible for advanced features)
       {
         test: /\.[jt]sx?$/,
         loader: 'esbuild-loader',
         options: {
           target: 'ES2020'
-        },
-        exclude: /node_modules/
+        }
       },
+
+      // Babel (Recommended for broader compatibility and advanced features)
+      /*{
+        test: /\.(?:js|ts|mjs|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', { targets: { node: 'current' } }],
+              '@babel/preset-typescript'
+            ],
+            plugins: ['@babel/plugin-transform-runtime']
+          }
+        }
+      }*/
+     
       {
         test: /\.css$/i,
         use: [
