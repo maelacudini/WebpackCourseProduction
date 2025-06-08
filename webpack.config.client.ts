@@ -51,7 +51,7 @@ const config: Configuration = {
             encodeOptions: {
               jpeg: {
                 // https://sharp.pixelplumbing.com/api-output#jpeg
-                quality: 100,
+                quality: 80,
               },
               webp: {
                 // https://sharp.pixelplumbing.com/api-output#webp
@@ -72,6 +72,21 @@ const config: Configuration = {
             },
           },
         },
+        generator: [
+          {
+            // type: "asset",
+            preset: "webp",
+            filename: 'public/[name].webp',
+            implementation: ImageMinimizerPlugin.sharpGenerate,
+            options: {
+              encodeOptions: {
+                webp: {
+                  quality: 80,
+                },
+              },
+            },
+          },
+        ],
       }),
     ],
     splitChunks: isDev ? false : {
