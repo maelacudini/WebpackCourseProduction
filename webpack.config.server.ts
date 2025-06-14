@@ -5,6 +5,7 @@ import nodeExternals from 'webpack-node-externals';
 import { EsbuildPlugin } from 'esbuild-loader';
 import dotenv from 'dotenv';
 import { type Configuration } from 'webpack';
+import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 
 const __filename = fileURLToPath( import.meta.url );
 const __dirname = dirname( __filename );
@@ -14,7 +15,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const config: Configuration = {
   entry: {
-    server: './src/server/server.ts',
+    server: ['webpack-hot-middleware/server', './src/server/server.ts'],
   },
   output: {
     filename: '[name].cjs',
@@ -30,7 +31,7 @@ const config: Configuration = {
       } )
     ],
     splitChunks: isDev ? false : {
-      chunks: 'async',
+      chunks: 'all',
       minSize: 20000,
       minRemainingSize: 0,
       minChunks: 1,
@@ -56,7 +57,8 @@ const config: Configuration = {
       define: {
         'process.env.NODE_ENV': JSON.stringify( process.env.NODE_ENV ),
       }
-    } )
+    } ),
+    new BundleAnalyzerPlugin.BundleAnalyzerPlugin(),
   ],
   module: {
     rules: [

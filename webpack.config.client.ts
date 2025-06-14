@@ -9,6 +9,7 @@ import { type Configuration } from 'webpack';
 import ImageMinimizerPlugin from "image-minimizer-webpack-plugin";
 import { PurgeCSSPlugin } from 'purgecss-webpack-plugin';
 import { glob } from 'glob';
+import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 
 const __filename = fileURLToPath( import.meta.url );
 const __dirname = dirname( __filename );
@@ -90,7 +91,7 @@ const config: Configuration = {
       }),
     ],
     splitChunks: isDev ? false : {
-      chunks: 'async',
+      chunks: 'all',
       minSize: 20000,
       minRemainingSize: 0,
       minChunks: 1,
@@ -133,6 +134,7 @@ const config: Configuration = {
       safelist: ['body', 'main'],
       blocklist: [],
     } ),
+    new BundleAnalyzerPlugin.BundleAnalyzerPlugin()
   ],
   module: {
     rules: [
